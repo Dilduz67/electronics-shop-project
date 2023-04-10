@@ -1,12 +1,13 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
-import pytest
 from src.item import Item
 
 p = Item('test',10,10)
 
 def test_calculate_total_price():
-    assert p.total_price()==100
+    assert p.calculate_total_price()==100
 
 def test_apply_discount():
-    assert p.discount_price()==85.0
+    p.pay_rate=0.85
+    p.apply_discount()
+    assert p.price==8.5
 
