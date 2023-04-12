@@ -1,9 +1,24 @@
+import csv
+
 class Item:
     """
     Класс для представления товара в магазине.
     """
     pay_rate = 1.0
     all = []
+    inst_from_csv = 0
+    @classmethod
+    def instantiate_from_csv(cls) -> None:
+        cls.all.clear()
+        Item.inst_from_csv=1
+        with open('..\\src\\items.csv') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                new_class = Item(row['name'], row['price'], row['quantity'])
+                cls.all.append(new_class)
+
+        Item.inst_from_csv = 0
+
 
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
@@ -13,11 +28,12 @@ class Item:
         :param price: Цена за единицу товара.
         :param quantity: Количество товара в магазине.
         """
-        self.name = name
+        self.__name = name
         self.price = price
         self.quantity = quantity
 
-        self.all.append(self)
+        if Item.inst_from_csv == 0:
+            self.all.append(self)
 
     def calculate_total_price(self) -> float:
         """
@@ -34,3 +50,25 @@ class Item:
         """
         self.price = self.price * self.pay_rate
 
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self,name):
+        try:
+            assert len(name) <= 10
+        except AssertionError:
+            print("Длина наименования товара не больше 10 симвовов!")
+        else:
+            self.__name = name
+
+    @staticmethod
+    def string_to_number(num_str):
+        val=0
+        try:
+            val = int(float(num_str))
+        except ValueError:
+            print("Передано неверное значение!")
+
+        return val
