@@ -18,5 +18,8 @@ def tast_instantiate_from_csv():
     p.instantiate_from_csv()
     assert len(p.all) == 5
 
+def test___repr__():
+    assert repr(p) == "Item('test', 8.5, 10)"
 
-
+def test___str__():
+    assert str(p) == 'test'

@@ -72,3 +72,10 @@ class Item:
             print("Передано неверное значение!")
 
         return val
+
+    #магические методы
+    def __repr__(self):
+        return f"{self.__class__.__name__}(\'{self.__name}\', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return self.__name
