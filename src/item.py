@@ -7,18 +7,29 @@ class Item:
     pay_rate = 1.0
     all = []
     inst_from_csv = 0
+    csv_file_name:str = None
     @classmethod
-    def instantiate_from_csv(cls) -> None:
+    def instantiate_from_csv(cls, csv_name='') -> None:
+        #global csv_file_name
         cls.all.clear()
         Item.inst_from_csv=1
-        with open('..\\src\\items.csv') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                new_class = Item(row['name'], row['price'], row['quantity'])
-                cls.all.append(new_class)
+        if csv_name=='':
+            cls.csv_file_name='..\\src\\items.csv'
+        else:
+            cls.csv_file_name=csv_name
+
+        try:
+            with open(cls.csv_file_name) as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    new_class = Item(row['name'], row['price'], row['quantity'])
+                    cls.all.append(new_class)
+        except FileNotFoundError:
+            print("Отсутствует файл items.csv.")
+        except KeyError as k:
+            raise InstantiateCSVError from None
 
         Item.inst_from_csv = 0
-
 
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
@@ -86,3 +97,10 @@ class Item:
         if not isinstance(other, Item):
             raise ValueError('Складывать можно только объекты Item и дочерние от них.')
         return self.quantity + other.quantity
+
+class InstantiateCSVError(Exception):
+    def __init__(self):
+        self.message = 'Файл item.csv поврежден.'
+
+    def __str__(self):
+        return self.message

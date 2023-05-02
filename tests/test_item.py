@@ -14,7 +14,7 @@ def test_apply_discount():
 def test_string_to_number():
     assert p.string_to_number('10') == 10
 
-def tast_instantiate_from_csv():
+def test_instantiate_from_csv():
     p.instantiate_from_csv()
     assert len(p.all) == 5
 
@@ -23,3 +23,10 @@ def test___repr__():
 
 def test___str__():
     assert str(p) == 'test'
+
+def test_instantiate_from_csv():
+    Item.instantiate_from_csv('no_file.csv')
+
+
+
+
