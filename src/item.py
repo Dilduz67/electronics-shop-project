@@ -9,15 +9,13 @@ class Item:
     inst_from_csv = 0
     csv_file_name:str = None
     @classmethod
-    def instantiate_from_csv(cls, csv_name='') -> None:
-        #global csv_file_name
+    def instantiate_from_csv(cls) -> None:
         cls.all.clear()
         Item.inst_from_csv=1
-        if csv_name=='':
-            cls.csv_file_name='..\\src\\items.csv'
-        else:
-            cls.csv_file_name=csv_name
 
+        if cls.csv_file_name==None:
+            cls.csv_file_name='..\\src\\items.csv'
+        print(cls.csv_file_name)
         try:
             with open(cls.csv_file_name) as csvfile:
                 reader = csv.DictReader(csvfile)
