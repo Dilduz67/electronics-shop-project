@@ -11,6 +11,7 @@ class MixinChangeLang:
             self._language= "EN"
 
         return (self)
+
 class Keyboard(Item,MixinChangeLang):
     def __init__(self, name: str, price: float, quantity: int) -> None:
         super().__init__(name, price, quantity)
