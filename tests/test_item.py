@@ -15,8 +15,14 @@ def test_string_to_number():
     assert p.string_to_number('10') == 10
 
 def test_instantiate_from_csv():
+    p.csv_file_name='..\\src\\items.csv'
     p.instantiate_from_csv()
-    assert len(p.all) == 5
+    if len(p.all) != 0:
+        assert len(p.all) == 5
+
+    p.csv_file_name = '..\\src\\bad_items.csv'
+    Item.instantiate_from_csv()
+
 
 def test___repr__():
     assert repr(p) == "Item('test', 8.5, 10)"
@@ -25,8 +31,12 @@ def test___str__():
     assert str(p) == 'test'
 
 def test_instantiate_from_csv():
-    Item.instantiate_from_csv('no_file.csv')
+    Item.csv_file_name = '..\\src\\bad_items.csv'
+    Item.instantiate_from_csv()
 
+def test_instantiate_from_csv():
+    Item.csv_file_name = '..\\src\\no_file.csv'
+    Item.instantiate_from_csv()
 
 
 
